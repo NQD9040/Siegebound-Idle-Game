@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public float enemySpawnPointX = 10f;
     public Vector2 enemySpawnPointY = new Vector2(-4f, 4f);
     public float spawnRate = 2f;
+    public float eliteSpawnChance = 0.1f; // 10% chance to spawn an elite enemy
     void Start()
     {
         InvokeRepeating("SpawnEnemy", 0f, spawnRate);
@@ -21,6 +22,10 @@ public class GameManager : MonoBehaviour
         float spawnX = enemySpawnPointX;
         float spawnY = Random.Range(enemySpawnPointY.x, enemySpawnPointY.y);
         Vector2 spawnPosition = new Vector2(spawnX, spawnY);
-        Instantiate(enemy, spawnPosition, Quaternion.identity);
+        EnemyController spawnedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity);
+        if (Random.value < eliteSpawnChance)
+        {
+            spawnedEnemy.changeToElite();
+        }
     }
 }

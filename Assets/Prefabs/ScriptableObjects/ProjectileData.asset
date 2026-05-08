@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee5709791810973439bf32f690c3935e, type: 3}
-  m_Name: EnemyData
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyScriptableObject
-  enemyName: New Enemy
-  baseHP: 200
-  baseAttack: 50
-  speed: 1
-  enemyType: 0
+  m_Script: {fileID: 11500000, guid: bd63b8a8bf4fcc748b42e9ab30dd8ead, type: 3}
+  m_Name: ProjectileData
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileScriptableObject
+  projectileName: Arrow
+  speed: 15
+  damage: 100
