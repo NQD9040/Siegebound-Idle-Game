@@ -106,6 +106,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileController
   data: {fileID: 11400000, guid: 2958d3696f4fa284a8e2269462a14ead, type: 2}
+  lifeTime: 5
+  arcHeight: 6
+  travelTime: 0.5
+  predictStrength: 1
+  noTargetDistance: 5
 --- !u!61 &3689419788070609660
 BoxCollider2D:
   m_ObjectHideFlags: 0

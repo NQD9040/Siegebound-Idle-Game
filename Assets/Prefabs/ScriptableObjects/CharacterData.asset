@@ -16,7 +16,7 @@ MonoBehaviour:
   level: 1
   exp: 0
   baseHP: 1000
-  baseAttack: 100
+  baseAttack: 50
   baseDEF: 50
   critRate: 0
   critDmg: 0.5

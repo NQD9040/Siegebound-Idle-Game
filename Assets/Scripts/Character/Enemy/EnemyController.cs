@@ -7,10 +7,12 @@ public class EnemyController : MonoBehaviour
     private float currentSpeed;
     private Animator animator;
     private bool isElite = false;
+    private GameObject hpBar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
+        hpBar = transform.GetChild(0).gameObject;
         if (isElite)
         {
             transform.localScale *= 2f; // Elite enemies are 50% larger
@@ -34,6 +36,9 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        // Update HP bar
+        float hpRatio = currentHP / (isElite ? data.baseHP * 4 : data.baseHP);
+        hpBar.transform.localScale = new Vector3(hpRatio, 0.1f, 1);
     }
     public void TakeDamage(float damage)
     {
@@ -46,5 +51,15 @@ public class EnemyController : MonoBehaviour
     public void changeToElite()
     {
         isElite = true;
+    }
+    public float getSpeed()
+    {
+        return currentSpeed;
+    }
+    public Vector2 GetMoveDirection()
+    {
+        return transform.localScale.x > 0
+            ? Vector2.right
+            : Vector2.left;
     }
 }
