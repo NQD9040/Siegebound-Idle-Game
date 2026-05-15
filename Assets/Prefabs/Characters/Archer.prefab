@@ -129,3 +129,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
   data: {fileID: 11400000, guid: 15355f9ce98fd3849ab2bb2b1b1ad2a2, type: 2}
   projectilePrefab: {fileID: 1156831202182132226, guid: c0ae887d747ee504c89e51133d9ba165, type: 3}
+  attackUpgradePanel: {fileID: 0}

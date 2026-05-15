@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,11 +14,13 @@ public class GameManager : MonoBehaviour
     public float eliteSpawnChance = 0.1f;
     private GameObject cursorPrefab;
     public Vector2 fixedCursorOffset = new Vector2(0.5f, 0.5f);
+    private TextMeshProUGUI costText;
     void Start()
     {
         InvokeRepeating(nameof(SpawnEnemy), 0f, spawnRate);
         cursorPrefab = GameObject.Find("Cursor");
         Cursor.visible = false;
+        costText = GameObject.Find("CostText").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -26,7 +29,7 @@ public class GameManager : MonoBehaviour
         {
             UpgradeManager.instance.ToggleUpgradePanel();
         }
-
+        UpdateCostText();
         UpdateCursor();
     }
 
@@ -50,5 +53,13 @@ public class GameManager : MonoBehaviour
         {
             spawnedEnemy.changeToElite();
         }
+    }
+    void UpdateCostText()
+    {
+        if (costText.text == UpgradeManager.instance.currentGold.ToString())
+        {
+            return;
+        }
+        costText.text = UpgradeManager.instance.currentGold.ToString();
     }
 }

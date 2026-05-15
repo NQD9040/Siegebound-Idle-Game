@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
     private bool isElite = false;
     private GameObject hpBar;
+    public int baseCost = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,6 +46,14 @@ public class EnemyController : MonoBehaviour
         currentHP -= damage;
         if (currentHP <= 0)
         {
+            if (isElite)
+            {
+                UpgradeManager.instance.AddGold(baseCost * 4); // Elite enemies give more gold
+            }
+            else
+            {
+                UpgradeManager.instance.AddGold(baseCost); // Add gold when the enemy is defeated
+            }
             Destroy(gameObject); // Destroy the enemy when HP drops to 0 or below
         }
     }

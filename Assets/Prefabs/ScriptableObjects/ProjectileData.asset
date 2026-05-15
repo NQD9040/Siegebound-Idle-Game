@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ProjectileData
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileScriptableObject
   projectileName: Arrow
-  speed: 15
-  damage: 50
+  speed: 50
+  damage: 750

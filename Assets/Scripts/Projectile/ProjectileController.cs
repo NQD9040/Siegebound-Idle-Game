@@ -25,10 +25,12 @@ public class ProjectileController : MonoBehaviour
     private Vector2 endPoint;
 
     private float timer;
-
+    public GameObject character;
     [System.Obsolete]
     void Start()
     {
+        CharacterController script = character.GetComponent<CharacterController>();
+        UpdateData(script);
         FindNearestEnemy();
 
         startPoint = transform.position;
@@ -123,6 +125,12 @@ public class ProjectileController : MonoBehaviour
         {
             Destroy(gameObject, 0.05f);
         }
+    }
+
+    void UpdateData(CharacterController controller)
+    {
+        // Cập nhật dữ liệu từ CharacterData
+        data.damage = controller.data.baseAttack;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

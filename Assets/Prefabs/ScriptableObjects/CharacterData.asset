@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: CharacterData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   charName: Archer
-  level: 1
-  exp: 0
-  baseHP: 1000
-  baseAttack: 50
-  baseDEF: 50
+  baseAttack: 750
   critRate: 0
   critDmg: 0.5
-  attackSpeed: 1
+  attackSpeed: 2.3999999
+  attackLevel: 1
+  speedLevel: 1
+  attackUpgradeCost: 16384
+  speedUpgradeCost: 16384
+  costMultiplier: 2
+  attackUpgradeIncrement: 50
+  speedUpgradeIncrement: 0.1

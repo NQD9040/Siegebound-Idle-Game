@@ -111,6 +111,7 @@ MonoBehaviour:
   travelTime: 0.5
   predictStrength: 1
   noTargetDistance: 5
+  character: {fileID: 1808236509610171067, guid: 8c1e77b4e8fba634cb99dedccac70196, type: 3}
 --- !u!61 &3689419788070609660
 BoxCollider2D:
   m_ObjectHideFlags: 0

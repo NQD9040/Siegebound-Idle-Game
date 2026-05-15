@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   charName: Main Character
-  level: 1
-  exp: 0
-  baseHP: 1000
-  baseAttack: 100
-  baseDEF: 50
+  baseAttack: 1600
   critRate: 0.05
   critDmg: 0.5
-  attackSpeed: 1
+  attackSpeed: 2.4999998
+  attackLevel: 1
+  speedLevel: 1
+  attackUpgradeCost: 32768
+  speedUpgradeCost: 32768
+  costMultiplier: 2
+  attackUpgradeIncrement: 100
+  speedUpgradeIncrement: 0.1

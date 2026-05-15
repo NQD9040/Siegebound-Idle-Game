@@ -1,5 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public enum TargetSearchMode
 {
@@ -33,6 +35,23 @@ public class PlayerController : MonoBehaviour
     public LineRenderer rangeRenderer;
     public int circleSegments = 50;
 
+    [Header("Upgrade UI")]
+    public GameObject attackUpgradePanel;
+    public GameObject speedUpgradePanel;
+    public GameObject rangeUpgradePanel;
+
+    private Button attackUpgradeButton;
+    private Button speedUpgradeButton;
+    private Button rangeUpgradeButton;
+
+    private TextMeshProUGUI attackUpgradeStatusText;
+    private TextMeshProUGUI speedUpgradeStatusText;
+    private TextMeshProUGUI rangeUpgradeStatusText;
+
+    [Header("Upgrade Stats")]
+    public int rangeUpgradeCost = 10;
+    public float rangeUpgradeIncrement = 0.2f;
+
     private float attackTimer;
     private float stopTimer;
 
@@ -53,6 +72,8 @@ public class PlayerController : MonoBehaviour
         spawnPosition = transform.position;
 
         DrawAttackRange();
+
+        SetupUpgradeUI();
     }
 
     void Update()
@@ -75,6 +96,41 @@ public class PlayerController : MonoBehaviour
         HandleAttack();
     }
 
+    void SetupUpgradeUI()
+    {
+        // Attack
+        attackUpgradeButton =
+            attackUpgradePanel.transform.GetChild(1).GetComponent<Button>();
+
+        attackUpgradeStatusText =
+            attackUpgradePanel.transform.GetChild(2)
+            .GetComponent<TextMeshProUGUI>();
+
+        attackUpgradeButton.onClick.AddListener(UpgradeAttack);
+
+        // Speed
+        speedUpgradeButton =
+            speedUpgradePanel.transform.GetChild(1).GetComponent<Button>();
+
+        speedUpgradeStatusText =
+            speedUpgradePanel.transform.GetChild(2)
+            .GetComponent<TextMeshProUGUI>();
+
+        speedUpgradeButton.onClick.AddListener(UpgradeSpeed);
+
+        // Range
+        rangeUpgradeButton =
+            rangeUpgradePanel.transform.GetChild(1).GetComponent<Button>();
+
+        rangeUpgradeStatusText =
+            rangeUpgradePanel.transform.GetChild(2)
+            .GetComponent<TextMeshProUGUI>();
+
+        rangeUpgradeButton.onClick.AddListener(UpgradeRange);
+
+        RefreshUpgradeUI();
+    }
+
     void HandleMovement()
     {
         moveInput = Keyboard.current != null
@@ -86,7 +142,7 @@ public class PlayerController : MonoBehaviour
                 Keyboard.current.wKey.isPressed ? 1 : 0
             )
             : Vector2.zero;
-        
+
         MoveCharacter(moveInput);
     }
 
@@ -269,6 +325,82 @@ public class PlayerController : MonoBehaviour
 
         return nearestEnemy;
     }
+
+    // =========================
+    // UPGRADES
+    // =========================
+
+    void UpgradeAttack()
+    {
+        if (!UpgradeManager.instance.SpendGold((int)playerData.attackUpgradeCost))
+            return;
+
+        playerData.baseAttack += playerData.attackUpgradeIncrement;
+
+        playerData.attackUpgradeCost =
+            Mathf.RoundToInt(playerData.attackUpgradeCost * playerData.costMultiplier);
+
+        RefreshUpgradeUI();
+    }
+
+    void UpgradeSpeed()
+    {
+        if (!UpgradeManager.instance.SpendGold((int)playerData.speedUpgradeCost))
+            return;
+
+        playerData.attackSpeed += playerData.speedUpgradeIncrement;
+
+        playerData.speedUpgradeCost =
+            Mathf.RoundToInt(playerData.speedUpgradeCost * playerData.costMultiplier);
+
+        RefreshUpgradeUI();
+    }
+
+    void UpgradeRange()
+    {
+        if (!UpgradeManager.instance.SpendGold(rangeUpgradeCost))
+            return;
+
+        attackRange += rangeUpgradeIncrement;
+
+        rangeUpgradeCost =
+            Mathf.RoundToInt(rangeUpgradeCost * playerData.costMultiplier);
+
+        DrawAttackRange();
+
+        RefreshUpgradeUI();
+    }
+
+    void RefreshUpgradeUI()
+    {
+        // Attack
+        attackUpgradeStatusText.text =
+            $"{playerData.baseAttack:F1} -> {(playerData.baseAttack + playerData.attackUpgradeIncrement):F1}";
+
+        attackUpgradeButton
+            .GetComponentInChildren<TextMeshProUGUI>().text =
+            $"Cost: {playerData.attackUpgradeCost}";
+
+        // Speed
+        speedUpgradeStatusText.text =
+            $"{playerData.attackSpeed:F1} -> {(playerData.attackSpeed + playerData.speedUpgradeIncrement):F1}";
+
+        speedUpgradeButton
+            .GetComponentInChildren<TextMeshProUGUI>().text =
+            $"Cost: {playerData.speedUpgradeCost}";
+
+        // Range
+        rangeUpgradeStatusText.text =
+            $"{attackRange:F1} -> {(attackRange + rangeUpgradeIncrement):F1}";
+
+        rangeUpgradeButton
+            .GetComponentInChildren<TextMeshProUGUI>().text =
+            $"Cost: {rangeUpgradeCost}";
+    }
+
+    // =========================
+    // RANGE VISUAL
+    // =========================
 
     void DrawAttackRange()
     {
